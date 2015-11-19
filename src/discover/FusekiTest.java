@@ -1,6 +1,9 @@
 package discover;
 import java.util.UUID;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
@@ -16,9 +19,13 @@ public class FusekiTest
             + "INSERT DATA"
             + "{ <http://example/%s>    dc:title    \"A new book\" ;"
             + "                         dc:creator  \"A.N.Other\" ." + "}   ";
+	static Logger log = Logger.getLogger(FusekiTest.class);
 	
 	public static void main(String args[])
 	{	
+		BasicConfigurator.configure();
+		log.info("Add data to triplestore");
+		
 		String id = UUID.randomUUID().toString();
 		System.out.println(String.format("Adding %s", id));
 		UpdateProcessor upp = UpdateExecutionFactory.createRemote(
